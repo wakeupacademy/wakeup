@@ -1,38 +1,97 @@
-import type React from "react"
 import type { Metadata } from "next"
-import { Playfair_Display, Open_Sans } from "next/font/google"
+import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import { ScrollToTop } from "@/components/scroll-to-top"
+import { Navigation } from "@/components/navigation"
 
-const playfair = Playfair_Display({
+const geist = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
-  variable: "--font-playfair",
 })
 
-const openSans = Open_Sans({
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
-  variable: "--font-open-sans",
 })
 
 export const metadata: Metadata = {
-  title: "Wake Up Academy - Développement Personnel et Motivation",
-  description:
-    "Réveillez votre potentiel avec Wake Up Academy. Coaching, formations et contenus inspirants pour transformer votre vie.",
-  generator: "v0.app",
+  title: "Wake Up Academy - Réveillez votre potentiel",
+  description: "Développement personnel, motivation et formation avec Wake Up Academy. Conférencier, coach et auteur motivant.",
+  keywords: ["développement personnel", "motivation", "coaching", "formation", "conférencier", "Wake Up Academy"],
+  authors: [{ name: "Wake Up Academy" }],
+  creator: "Wake Up Academy",
+  publisher: "Wake Up Academy",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://wakeupacademy.netlify.app'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: "Wake Up Academy - Réveillez votre potentiel",
+    description: "Développement personnel, motivation et formation avec Wake Up Academy. Conférencier, coach et auteur motivant.",
+    url: 'https://wakeupacademy.netlify.app',
+    siteName: 'Wake Up Academy',
+    images: [
+      {
+        url: '/images/wua-logo-xl.png',
+        width: 350,
+        height: 175,
+        alt: 'Wake Up Academy Logo',
+      },
+    ],
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Wake Up Academy - Réveillez votre potentiel",
+    description: "Développement personnel, motivation et formation avec Wake Up Academy.",
+    images: ['/images/wua-logo-xl.png'],
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/favicon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon.png',
+  },
+  manifest: '/site.webmanifest',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="fr" className={`${playfair.variable} ${openSans.variable} antialiased`}>
-      <body className="font-sans">
-        <ScrollToTop />
-        {children}
+    <html lang="fr" className={`${geist.variable} ${geistMono.variable}`}>
+      <head>
+        <link rel="icon" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="shortcut icon" href="/favicon.png" />
+      </head>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        <Navigation />
+        <main className="flex-1">
+          {children}
+        </main>
       </body>
     </html>
   )
