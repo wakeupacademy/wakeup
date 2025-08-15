@@ -10,13 +10,13 @@
 
 ### 1. Fichiers de configuration
 
-- ✅ `netlify.toml` - Configuration Netlify
-- ✅ `next.config.mjs` - Configuration Next.js optimisée
+- ✅ `netlify.toml` - Configuration Netlify optimisée
+- ✅ `next.config.mjs` - Configuration Next.js avec export statique
 - ✅ `.gitignore` - Fichiers exclus du déploiement
 
-### 2. Variables d'environnement (optionnel)
+### 2. Variables d'environnement
 
-Si nécessaire, configurez dans Netlify :
+Dans Netlify, configurez :
 ```
 NODE_VERSION=18
 NPM_FLAGS=--version
@@ -32,14 +32,21 @@ NPM_FLAGS=--version
 4. **Sélectionnez le repository** : `wakeupacademy/wakeup`
 5. **Configuration automatique** :
    - Build command : `pnpm build`
-   - Publish directory : `.next`
+   - Publish directory : `out` ⚠️ **IMPORTANT : Utilisez `out` et non `.next`**
 6. **Cliquez sur "Deploy site"**
 
 ### Option 2 : Déploiement manuel
 
 1. **Build local** : `pnpm build`
-2. **Dossier à déployer** : `.next`
-3. **Glissez-déposez** le dossier `.next` sur Netlify
+2. **Dossier à déployer** : `out` ⚠️ **Utilisez le dossier `out`**
+3. **Glissez-déposez** le dossier `out` sur Netlify
+
+## ⚠️ **Points critiques pour éviter l'erreur 404**
+
+1. **Dossier de publication** : Utilisez `out` et non `.next`
+2. **Configuration Next.js** : `output: 'export'` est activé
+3. **Redirections** : Configurées dans `netlify.toml`
+4. **Build** : Doit générer des fichiers HTML statiques
 
 ## 📱 Configuration du domaine
 
@@ -63,16 +70,32 @@ NPM_FLAGS=--version
 
 ### Erreurs courantes
 
-1. **Build échoue** : Vérifiez `pnpm build` en local
-2. **Page blanche** : Vérifiez les routes Next.js
-3. **Images cassées** : Vérifiez `next.config.mjs`
+1. **Page 404** : Vérifiez que le dossier de publication est `out`
+2. **Build échoue** : Vérifiez `pnpm build` en local
+3. **Routes cassées** : Vérifiez les redirections dans `netlify.toml`
 
-### Support
+### Vérifications
 
-- **Documentation Netlify** : https://docs.netlify.com
-- **Documentation Next.js** : https://nextjs.org/docs
-- **Issues GitHub** : https://github.com/wakeupacademy/wakeup
+- ✅ Build génère le dossier `out`
+- ✅ Fichiers HTML présents dans `out`
+- ✅ Configuration Netlify pointe vers `out`
+- ✅ Redirections configurées
+
+## 🔧 Configuration technique
+
+### Next.js config
+```javascript
+output: 'export',
+trailingSlash: true,
+distDir: 'out'
+```
+
+### Netlify config
+```toml
+publish = "out"
+command = "pnpm build"
+```
 
 ---
 
-**🎉 Votre site Wake Up Academy sera bientôt en ligne !**
+**🎉 Votre site Wake Up Academy sera bientôt en ligne sans erreur 404 !**
