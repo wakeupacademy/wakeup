@@ -10,7 +10,7 @@ export function Logo() {
           alt="Wake Up Academy"
           width={350}
           height={175}
-          className="h-32 w-auto md:h-40 lg:h-48 xl:h-52 transition-all duration-500 filter brightness-105 contrast-105"
+          className="h-36 w-auto md:h-44 lg:h-52 xl:h-56 transition-all duration-500 filter brightness-105 contrast-105"
           priority
         />
       </div>
